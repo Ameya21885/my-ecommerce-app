@@ -1,0 +1,9 @@
+export { default as Root } from "./Root";
+export { default as Home } from "./Home";
+export { default as Men } from "./Men";
+export { default as Women } from "./Women";
+export { default as Kids } from "./Kids";
+export { default as AddToCart } from "./AddToCart";
+export { default as SingleProduct } from "./SingleProduct";
+export { default as Login } from "./Login";
+export { default as AuthRoot } from "./AuthRoot";
