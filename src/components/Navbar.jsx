@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -30,6 +30,7 @@ import {
 import { NavLink } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import CloseIcon from "@mui/icons-material/Close";
 
 const pages = [
   { id: 1, title: "Home", link: "/" },
@@ -84,6 +85,45 @@ export default function Navbar() {
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          padding: "10px 20px",
+        }}
+      >
+      <Box sx={{display:"flex", alignItems:'center'}}>
+      <img
+          src="https://i.pinimg.com/736x/db/16/45/db1645cc1ed95625a5dff41ee9a0f164.jpg"
+          alt="logo"
+          width={50}
+          style={{ borderRadius: "50%", marginRight: 8 }}
+        />
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 700,
+            color: "inherit",
+            textDecoration: "none",
+            fontFamily: "'Poppins', sans-serif",
+          }}
+        >
+          Logo
+        </Typography>
+      </Box>
+        <IconButton
+          onClick={toggleDrawer(false)}
+          aria-label="close navigation menu"
+        >
+          <CloseIcon
+            sx={{
+              border: "2px solid black",
+              borderRadius: "20px",
+              color: "black",
+            }}
+          />
+        </IconButton>
+      </Box>
       <List>
         {pages.map((page) => (
           <ListItem key={page.id} disablePadding>
@@ -142,241 +182,254 @@ export default function Navbar() {
   };
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar
-          sx={{ justifyContent: { xs: "space-between", md: "flex-start" } }}
+    <AppBar position="static" sx={{ backgroundColor: "#2f2f2f" }}>
+      {/* <Container maxWidth="xl" sx={{ backgroundColor: "#2f2f2f" }}>
+
+      </Container> */}
+      <Toolbar
+        sx={{ justifyContent: { xs: "space-between", md: "flex-start" } }}
+      >
+        {/* Mobile Menu Button */}
+        <Box sx={{ display: { xs: "flex", md: "none" } }}>
+          <IconButton size="large" onClick={toggleDrawer(true)} color="inherit">
+            <MenuIcon />
+          </IconButton>
+        </Box>
+
+        <Drawer anchor="left" open={mobileOpen} onClose={toggleDrawer(false)}>
+          {DrawerList}
+        </Drawer>
+
+        {/* Logo */}
+        <Box
+          sx={{
+            // display:'flex',
+            display: { xs: "none", md: "flex" },
+            alignItems: "center",
+            flexGrow: 1,
+          }}
         >
-          {/* Mobile Menu Button */}
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              onClick={toggleDrawer(true)}
-              color="inherit"
+          <img
+            src="https://i.pinimg.com/736x/db/16/45/db1645cc1ed95625a5dff41ee9a0f164.jpg"
+            alt="logo"
+            width={50}
+            style={{ borderRadius: "50%", marginRight: 8 }}
+          />
+          <Typography
+            variant="h6"
+            component={Link}
+            to="/"
+            sx={{
+              textDecoration: "none",
+              fontWeight: 700,
+              letterSpacing: ".1rem",
+              color: "inherit",
+            }}
+          >
+            LOGO
+          </Typography>
+        </Box>
+
+        {/* Desktop Navigation */}
+        <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          {pages.map((page) => (
+            <Button
+              key={page.id}
+              component={NavLink}
+              to={page.link}
+              sx={{ color: "white", mx: 1 }}
             >
-              <MenuIcon />
-            </IconButton>
-          </Box>
+              {page.title}
+            </Button>
+          ))}
+        </Box>
 
-          <Drawer anchor="left" open={mobileOpen} onClose={toggleDrawer(false)}>
-            {DrawerList}
-          </Drawer>
-
-          {/* Logo */}
-          <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
-            <img
-              src="https://i.pinimg.com/736x/db/16/45/db1645cc1ed95625a5dff41ee9a0f164.jpg"
-              alt="logo"
-              width={50}
-              style={{ borderRadius: "50%", marginRight: 8 }}
-            />
-            <Typography
-              variant="h6"
-              component={Link}
-              to="/"
-              sx={{
-                textDecoration: "none",
-                fontWeight: 700,
-                letterSpacing: ".1rem",
-                color: "inherit",
-              }}
-            >
-              LOGO
-            </Typography>
-          </Box>
-
-          {/* Desktop Navigation */}
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.id}
-                component={NavLink}
-                to={page.link}
-                sx={{ color: "white", mx: 1 }}
-              >
-                {page.title}
-              </Button>
-            ))}
-          </Box>
-
-          {/* Login Button */}
-          {/* <Button variant="contained" onClick={handleClickOpen}>
+        {/* Login Button */}
+        {/* <Button variant="contained" onClick={handleClickOpen}>
             Login
           </Button> */}
-          {user ? (
-            <>
-              <Typography
-                sx={{ color: "white", mx: 2 }}
-                onClick={handleMenuClick}
-              >
-                {user.name || user.email}
-              </Typography>
-              {/* Dropdown Menu */}
-              <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
-              </Menu>
-            </>
-          ) : (
-            <Button variant="contained" onClick={handleClickOpen}>
-              Login
-            </Button>
-          )}
+        {user ? (
+          <>
+            <Typography
+              sx={{ color: "white", mx: 2 }}
+              onClick={handleMenuClick}
+            >
+              {user.name || user.email}
+            </Typography>
 
-          {/* Login/Signup Modal */}
-          <Dialog
-            fullScreen={fullScreen}
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="responsive-dialog-title"
+            {/* Dropdown Menu */}
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            </Menu>
+
+            
+          </>
+        ) : (
+          <Button
+            variant="contained"
+            onClick={handleClickOpen}
+            sx={{
+              background:
+                "linear-gradient(90deg, rgba(37,36,36,1) 0%, rgba(23,21,21,1) 35%, rgba(28,27,27,1) 100%)",
+              color: "white",
+              "&:hover": {
+                background:
+                  "linear-gradient(90deg, rgba(28,27,27,1) 0%, rgba(23,21,21,1) 65%, rgba(37,36,36,1) 100%)",
+              },
+            }}
           >
-            {account.view === "login" ? (
-              <Box>
-                <DialogTitle id="responsive-dialog-title">Login</DialogTitle>
-                <form onSubmit={formik.handleSubmit}>
-                  <DialogContent>
-                    <TextField
-                      fullWidth
-                      margin="dense"
-                      id="email"
-                      name="email"
-                      label="Email"
-                      value={formik.values.email}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.email && Boolean(formik.errors.email)
-                      }
-                      helperText={formik.touched.email && formik.errors.email}
-                    />
-                    <TextField
-                      fullWidth
-                      id="password"
-                      name="password"
-                      label="Password"
-                      value={formik.values.password}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.password &&
-                        Boolean(formik.errors.password)
-                      }
-                      helperText={
-                        formik.touched.password && formik.errors.password
-                      }
-                      type="password"
-                      margin="dense"
-                    />
-                  </DialogContent>
-                  <DialogActions sx={{ flexDirection: "column", gap: 1 }}>
-                    <Button
-                      variant="contained"
-                      // onClick={handleClose}
-                      type="submit"
+            Login
+          </Button>
+        )}
+
+        {/* Login/Signup Modal */}
+        <Dialog
+          fullScreen={fullScreen}
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="responsive-dialog-title"
+        >
+          {account.view === "login" ? (
+            <Box>
+              <DialogTitle id="responsive-dialog-title">Login</DialogTitle>
+              <form onSubmit={formik.handleSubmit}>
+                <DialogContent>
+                  <TextField
+                    fullWidth
+                    margin="dense"
+                    id="email"
+                    name="email"
+                    label="Email"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                  />
+                  <TextField
+                    fullWidth
+                    id="password"
+                    name="password"
+                    label="Password"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.password && Boolean(formik.errors.password)
+                    }
+                    helperText={
+                      formik.touched.password && formik.errors.password
+                    }
+                    type="password"
+                    margin="dense"
+                  />
+                </DialogContent>
+                <DialogActions sx={{ flexDirection: "column", gap: 1 }}>
+                  <Button
+                    variant="contained"
+                    // onClick={handleClose}
+                    type="submit"
+                  >
+                    Continue
+                  </Button>
+                  <Typography>
+                    Create an account?{" "}
+                    <span
+                      onClick={toggleSignup}
+                      style={{ cursor: "pointer", color: "blue" }}
                     >
-                      Continue
-                    </Button>
-                    <Typography>
-                      Create an account?{" "}
-                      <span
-                        onClick={toggleSignup}
-                        style={{ cursor: "pointer", color: "blue" }}
-                      >
-                        Click here.
-                      </span>
-                    </Typography>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox defaultChecked />}
-                        label="I agree to the terms & privacy policy."
-                      />
-                    </FormGroup>
-                  </DialogActions>
-                </form>
-              </Box>
-            ) : (
-              <Box>
-                <DialogTitle id="responsive-dialog-title">Sign Up</DialogTitle>
-                <form onSubmit={formik.handleSubmit}>
-                  <DialogContent>
-                    <TextField
-                      fullWidth
-                      label="Your Name"
-                      margin="dense"
-                      id="email"
-                      name="name"
-                      value={formik.values.name}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={formik.touched.name && Boolean(formik.errors.name)}
-                      helperText={formik.touched.name && formik.errors.name}
+                      Click here.
+                    </span>
+                  </Typography>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={<Checkbox defaultChecked />}
+                      label="I agree to the terms & privacy policy."
                     />
-                    <TextField
-                      fullWidth
-                      label="Email address"
-                      margin="dense"
-                      id="email"
-                      name="email"
-                      value={formik.values.email}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.email && Boolean(formik.errors.email)
-                      }
-                      helperText={formik.touched.email && formik.errors.email}
-                    />
-                    <TextField
-                      fullWidth
-                      label="Password"
-                      type="password"
-                      margin="dense"
-                      id="password"
-                      name="password"
-                      value={formik.values.password}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.password &&
-                        Boolean(formik.errors.password)
-                      }
-                      helperText={
-                        formik.touched.password && formik.errors.password
-                      }
-                    />
-                  </DialogContent>
-                  <DialogActions sx={{ flexDirection: "column", gap: 1 }}>
-                    <Button
-                      variant="contained"
-                      // onClick={handleClose}
-                      type="submit"
+                  </FormGroup>
+                </DialogActions>
+              </form>
+            </Box>
+          ) : (
+            <Box>
+              <DialogTitle id="responsive-dialog-title">Sign Up</DialogTitle>
+              <form onSubmit={formik.handleSubmit}>
+                <DialogContent>
+                  <TextField
+                    fullWidth
+                    label="Your Name"
+                    margin="dense"
+                    id="email"
+                    name="name"
+                    value={formik.values.name}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.name && Boolean(formik.errors.name)}
+                    helperText={formik.touched.name && formik.errors.name}
+                  />
+                  <TextField
+                    fullWidth
+                    label="Email address"
+                    margin="dense"
+                    id="email"
+                    name="email"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                  />
+                  <TextField
+                    fullWidth
+                    label="Password"
+                    type="password"
+                    margin="dense"
+                    id="password"
+                    name="password"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.password && Boolean(formik.errors.password)
+                    }
+                    helperText={
+                      formik.touched.password && formik.errors.password
+                    }
+                  />
+                </DialogContent>
+                <DialogActions sx={{ flexDirection: "column", gap: 1 }}>
+                  <Button
+                    variant="contained"
+                    // onClick={handleClose}
+                    type="submit"
+                  >
+                    Continue
+                  </Button>
+                  <Typography>
+                    Already have an account?{" "}
+                    <span
+                      onClick={toggleLogin}
+                      style={{ cursor: "pointer", color: "blue" }}
                     >
-                      Continue
-                    </Button>
-                    <Typography>
-                      Already have an account?{" "}
-                      <span
-                        onClick={toggleLogin}
-                        style={{ cursor: "pointer", color: "blue" }}
-                      >
-                        Login here.
-                      </span>
-                    </Typography>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox defaultChecked />}
-                        label="I agree to the terms & privacy policy."
-                      />
-                    </FormGroup>
-                  </DialogActions>
-                </form>
-              </Box>
-            )}
-          </Dialog>
-        </Toolbar>
-      </Container>
+                      Login here.
+                    </span>
+                  </Typography>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={<Checkbox defaultChecked />}
+                      label="I agree to the terms & privacy policy."
+                    />
+                  </FormGroup>
+                </DialogActions>
+              </form>
+            </Box>
+          )}
+        </Dialog>
+      </Toolbar>
     </AppBar>
   );
 }

@@ -36,19 +36,19 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "login",
-    element: <AuthRoot />,
-    children: [
-      {
-        element: <Login/>,
-        index: true,
-      },
-      {
-        path: "*",
-        element: <p>404 Error- Nothing here...</p>,
-      },
-    ],}
+  // {
+  //   path: "login",
+  //   element: <AuthRoot />,
+  //   children: [
+  //     {
+  //       element: <Login/>,
+  //       index: true,
+  //     },
+  //     {
+  //       path: "*",
+  //       element: <p>404 Error- Nothing here...</p>,
+  //     },
+  //   ],}
 
 ]);
 

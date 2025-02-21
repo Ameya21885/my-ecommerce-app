@@ -9,8 +9,13 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
     Grid,
     Pagination,
+    Radio,
+    RadioGroup,
     Typography,
   } from "@mui/material";
   import React, { useState } from "react";
@@ -120,7 +125,7 @@ import {
         <Button variant="outlined" onClick={handleClickOpen}>
           Open alert dialog
         </Button>
-        <Dialog
+        {/* <Dialog
           open={open}
           onClose={handleClose}
           aria-labelledby="alert-dialog-title"
@@ -141,7 +146,40 @@ import {
               Agree
             </Button>
           </DialogActions>
-        </Dialog>
+        </Dialog> */}
+        <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          Filter Section
+        </DialogTitle>
+        <DialogContent>
+          {/* <DialogContentText id="alert-dialog-description">
+              Let Google help apps determine location. This means sending
+              anonymous location data to Google, even when no apps are running.
+            </DialogContentText> */}
+          <FormControl>
+            <FormLabel id="demo-radio-buttons-group-label">Price</FormLabel>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue="female"
+              name="radio-buttons-group"
+            >
+              <FormControlLabel value="low" control={<Radio />} label="Low" />
+              <FormControlLabel value="high" control={<Radio />} label="High" />
+            </RadioGroup>
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Apply</Button>
+          {/* <Button onClick={handleClose} autoFocus>
+            Agree
+          </Button> */}
+        </DialogActions>
+      </Dialog>
       </>
     );
   };
